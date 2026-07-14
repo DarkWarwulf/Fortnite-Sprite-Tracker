@@ -10,6 +10,18 @@
   var PREFS_KEY = "fnSpriteTracker:prefs:v1";
   var IMG_PATH = "assets/sprites/";
 
+  // Theme color per sprite, matching fortnite.gg card backgrounds / glows.
+  // Base sprites use their rarity; variants use their variant name.
+  var THEME_COLORS = {
+    rare: "#104273", epic: "#4d1566", legendary: "#743e0a", mythic: "#a89442",
+    gold: "#9d752a", candy: "#9f4540", galaxy: "#463b9e", gem: "#7098a3",
+    holofoil: "#a1428e", cube: "#730974", quack: "#6941a2"
+  };
+  function themeOf(s) {
+    var key = s.variant === "base" ? s.rarity : s.variant;
+    return THEME_COLORS[key] || THEME_COLORS.rare;
+  }
+
   var SPRITES = (window.SPRITES || []).slice();
   var RELEASED = SPRITES.filter(function (s) { return s.released; });
   var RELEASED_TOTAL = RELEASED.length;
@@ -123,6 +135,7 @@
     var lvl = levelOf(s.id);
     var el = document.createElement("article");
     el.className = "card r-" + s.rarity + " lvl" + lvl + (lvl === MAX_LEVEL ? " mastered" : "");
+    el.style.setProperty("--rc", themeOf(s));   // theme color drives bg, top bar, glow, pips
     el.dataset.id = s.id;
 
     /* thumb */
@@ -134,10 +147,6 @@
     img.draggable = false;
     thumb.appendChild(img);
 
-    if (s.pct && s.pct !== "0%") {
-      var pct = document.createElement("span"); pct.className = "pct-badge";
-      pct.textContent = s.pct + " drop"; thumb.appendChild(pct);
-    }
     if (!s.released) {
       var ub = document.createElement("span"); ub.className = "unreleased-badge";
       ub.textContent = "Unreleased"; thumb.appendChild(ub);
@@ -156,12 +165,22 @@
 
     /* body */
     var body = document.createElement("div"); body.className = "card-body";
-    var nameRow = document.createElement("div"); nameRow.className = "name-row";
-    var nm = document.createElement("span"); nm.className = "sprite-name"; nm.textContent = s.name;
-    var rt = document.createElement("span"); rt.className = "rarity-tag";
-    rt.textContent = s.rarity === "special" ? "Variant" : s.rarity;
-    nameRow.appendChild(nm); nameRow.appendChild(rt);
-    body.appendChild(nameRow);
+    var nm = document.createElement("div"); nm.className = "sprite-name"; nm.textContent = s.name;
+    body.appendChild(nm);
+
+    // meta row: rarity pill + drop-% pill (colors match fortnite.gg)
+    var meta = document.createElement("div"); meta.className = "meta-row";
+    var rp = document.createElement("span");
+    rp.className = "pill pill-rarity rar-" + s.rarity;
+    rp.textContent = s.rarity;
+    meta.appendChild(rp);
+    if (s.pct) {
+      var pp = document.createElement("span");
+      pp.className = "pill pill-pct";
+      pp.textContent = s.pct;
+      meta.appendChild(pp);
+    }
+    body.appendChild(meta);
 
     /* level control */
     var level = document.createElement("div"); level.className = "level";

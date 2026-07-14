@@ -208,17 +208,12 @@ h1,h2,h3{font-family:"Bebas Neue","Titillium Web",sans-serif;font-weight:400;let
   background:radial-gradient(120% 80% at 50% -10%, color-mix(in srgb,var(--rc) 22%, transparent), transparent 60%);
   opacity:.6;
 }
-.card.r-rare{--rc:var(--rare)}
-.card.r-epic{--rc:var(--epic)}
-.card.r-legendary{--rc:var(--legendary)}
-.card.r-mythic{--rc:var(--mythic)}
-.card.r-special{--rc:var(--special)}
-.card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--rc) 55%, var(--line));box-shadow:0 16px 34px rgba(0,0,0,.5)}
+/* --rc (theme color) is set inline per card in app.js, matching fortnite.gg */
+.card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--rc) 65%, var(--line));box-shadow:0 16px 34px rgba(0,0,0,.5)}
 
-/* not-owned state */
+/* not-owned state — keep the themed background (like fortnite.gg), only dim the sprite */
 .card.lvl0 .thumb img{filter:grayscale(1) brightness(.55) contrast(.9)}
 .card.lvl0{opacity:.92}
-.card.lvl0 .thumb{background:rgba(0,0,0,.25)}
 
 /* mastered state */
 .card.mastered{border-color:color-mix(in srgb,var(--yellow) 60%, transparent)}
@@ -227,17 +222,12 @@ h1,h2,h3{font-family:"Bebas Neue","Titillium Web",sans-serif;font-weight:400;let
 
 .thumb{
   position:relative;aspect-ratio:1;border-radius:10px;
-  background:radial-gradient(circle at 50% 35%, color-mix(in srgb,var(--rc) 30%, #0a0f2e), #070a1f 75%);
+  /* matches fortnite.gg: theme color fades from top into the dark card */
+  background:linear-gradient(180deg, var(--rc) 0%, rgba(8,11,34,0) 82%), #0a0e24;
   display:grid;place-items:center;overflow:hidden;
 }
 .thumb img{width:86%;height:86%;object-fit:contain;image-rendering:auto;transition:filter .3s, transform .3s}
 .card:hover .thumb img{transform:scale(1.05)}
-.pct-badge{
-  position:absolute;left:8px;bottom:8px;
-  font-size:11px;font-weight:700;color:#dfe6ff;
-  background:rgba(4,7,24,.7);border:1px solid var(--line);
-  padding:2px 7px;border-radius:6px;backdrop-filter:blur(4px);
-}
 .unreleased-badge{
   position:absolute;right:8px;top:8px;font-size:9px;letter-spacing:1px;font-weight:800;
   text-transform:uppercase;color:#04122b;background:var(--yellow);
@@ -249,12 +239,23 @@ h1,h2,h3{font-family:"Bebas Neue","Titillium Web",sans-serif;font-weight:400;let
 }
 @keyframes pop{0%{transform:scale(0) rotate(-25deg)}70%{transform:scale(1.25)}100%{transform:scale(1)}}
 
-.card-body{position:relative;z-index:1;display:flex;flex-direction:column;gap:7px}
-.name-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
-.sprite-name{font-weight:700;font-size:15px;color:#fff;line-height:1.1}
-.rarity-tag{
-  font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
-  color:var(--rc);flex:none;
+.card-body{position:relative;z-index:1;display:flex;flex-direction:column;gap:8px}
+.sprite-name{font-weight:700;font-size:15px;color:#fff;line-height:1.15}
+
+/* rarity + drop-% pills — colors mirror fortnite.gg */
+.meta-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.pill{
+  font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;
+  padding:4px 8px 3px;border-radius:6px;line-height:1;white-space:nowrap;
+}
+.pill-pct{background:rgba(255,255,255,.08);color:#cfd5df;font-weight:700;letter-spacing:0}
+.pill-rarity.rar-rare{background:#00458a;color:#00fffb}
+.pill-rarity.rar-epic{background:#4c197b;color:#ec27ff}
+.pill-rarity.rar-legendary{background:#8a3c1e;color:#fbc363}
+.pill-rarity.rar-mythic{background:#7c5d26;color:#fff0a6}
+.pill-rarity.rar-special{
+  color:#0a0a0a;
+  background:linear-gradient(15deg,#5dffe4 0%,#8dff9a 8%,#fff36a 16%,#60dfff 24%,#7b7cff 32%,#ff77d8 40%,#ffc45f 48%,#5dffe4 56%,#8dff9a 64%,#fff36a 72%,#60dfff 80%,#7b7cff 88%,#ff77d8 96%,#ffc45f 100%);
 }
 
 /* level control */
