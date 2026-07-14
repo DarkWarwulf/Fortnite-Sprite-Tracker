@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#0a0e2a" />
+<title>Sprite Tracker · Fortnite Collection</title>
+<meta name="description" content="Track every Fortnite Sprite you've collected and the level you've raised it to. Your personal collection saves automatically in your browser." />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Titillium+Web:wght@400;600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="bg-fx" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <span class="bolt">⚡</span>
+      </div>
+      <div class="brand-text">
+        <h1>SPRITE<span>TRACKER</span></h1>
+        <p>Fortnite Collection Log</p>
+      </div>
+    </div>
+
+    <div class="stats" id="stats">
+      <div class="stat-card owned">
+        <div class="stat-ring" id="ownedRing"><span id="ownedPct">0%</span></div>
+        <div class="stat-meta">
+          <span class="stat-label">Owned</span>
+          <span class="stat-num"><b id="ownedNum">0</b> / <i id="ownedTotal">66</i></span>
+        </div>
+      </div>
+      <div class="stat-card mastered">
+        <div class="stat-ring" id="masteredRing"><span id="masteredPct">0%</span></div>
+        <div class="stat-meta">
+          <span class="stat-label">Mastered</span>
+          <span class="stat-num"><b id="masteredNum">0</b> / <i id="masteredTotal">66</i></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="toolbar">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" class="search-ico" aria-hidden="true"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+      <input id="search" type="search" placeholder="Search sprites…" autocomplete="off" aria-label="Search sprites" />
+    </div>
+
+    <div class="filter-group" id="statusFilter" role="tablist" aria-label="Collection status">
+      <button class="chip active" data-status="all">All</button>
+      <button class="chip" data-status="owned">Owned</button>
+      <button class="chip" data-status="missing">Missing</button>
+      <button class="chip" data-status="mastered">Mastered</button>
+    </div>
+
+    <div class="filter-group" id="rarityFilter" aria-label="Rarity">
+      <button class="chip r-all active" data-rarity="all">All Rarities</button>
+      <button class="chip r-rare" data-rarity="rare">Rare</button>
+      <button class="chip r-epic" data-rarity="epic">Epic</button>
+      <button class="chip r-legendary" data-rarity="legendary">Legendary</button>
+      <button class="chip r-mythic" data-rarity="mythic">Mythic</button>
+      <button class="chip r-special" data-rarity="special">Variants</button>
+    </div>
+
+    <div class="toolbar-right">
+      <label class="toggle" title="Show sprites that are not yet released in-game">
+        <input type="checkbox" id="showUnreleased" />
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        <span class="toggle-label">Show Unreleased</span>
+      </label>
+
+      <div class="menu">
+        <button class="btn-ghost" id="menuBtn" aria-haspopup="true" aria-expanded="false">⋯ Data</button>
+        <div class="menu-pop" id="menuPop" hidden>
+          <button data-act="export">⬆ Export backup</button>
+          <button data-act="import">⬇ Import backup</button>
+          <button data-act="share">🔗 Copy link</button>
+          <button data-act="reset" class="danger">🗑 Reset collection</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <p class="result-note" id="resultNote"></p>
+
+  <section id="grid" class="grid" aria-live="polite"></section>
+
+  <p class="empty" id="empty" hidden>No sprites match your filters.</p>
+</main>
+
+<footer class="site-footer">
+  <p>Your collection is saved privately in <b>this browser</b> and reappears whenever you return. Use <b>Export backup</b> to move it to another device.</p>
+  <p class="fine">Fan-made tracker. Sprite names & artwork are property of Epic Games. Not affiliated with or endorsed by Epic Games. Data referenced from fortnite.gg.</p>
+</footer>
+
+<!-- Modal -->
+<div class="modal-scrim" id="modalScrim" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-x" id="modalClose" aria-label="Close">✕</button>
+    <h2 id="modalTitle">Backup</h2>
+    <p id="modalDesc" class="modal-desc"></p>
+    <textarea id="modalText" spellcheck="false" aria-label="Backup code"></textarea>
+    <div class="modal-actions" id="modalActions"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
