@@ -41,20 +41,27 @@ body{
 h1,h2,h3{font-family:"Bebas Neue","Titillium Web",sans-serif;font-weight:400;letter-spacing:.5px;margin:0}
 
 /* animated background */
+/* fixed artwork backdrop — stays put while the grid scrolls */
 .bg-fx{
   position:fixed;inset:0;z-index:-2;
-  background:
-    radial-gradient(1100px 600px at 15% -10%, rgba(123,92,255,.35), transparent 60%),
-    radial-gradient(1000px 620px at 100% 0%, rgba(18,216,255,.25), transparent 55%),
-    radial-gradient(900px 700px at 50% 120%, rgba(255,111,216,.18), transparent 60%),
-    linear-gradient(180deg,var(--bg2),var(--bg) 55%);
+  background-color:var(--bg);
+  background-image:
+    linear-gradient(180deg, rgba(4,6,20,.28), rgba(4,6,20,.55)),
+    url("assets/img/background.jpg");
+  background-size:cover,cover;
+  background-position:center center,center center;
+  background-repeat:no-repeat,no-repeat;
 }
-.bg-fx::after{
-  content:"";position:absolute;inset:-50%;
-  background-image:repeating-linear-gradient(115deg, rgba(255,255,255,.035) 0 2px, transparent 2px 46px);
-  animation:drift 40s linear infinite;
+
+/* centered app column — the artwork shows to the left and right of it */
+.shell{
+  position:relative;
+  max-width:1420px;margin:0 auto;min-height:100vh;
+  background:rgba(7,10,30,.90);
+  border-left:1px solid rgba(120,150,255,.16);
+  border-right:1px solid rgba(120,150,255,.16);
+  box-shadow:0 0 80px rgba(0,0,0,.65);
 }
-@keyframes drift{to{transform:translateX(46px)}}
 
 /* ---------- header ---------- */
 .site-header{
@@ -336,6 +343,8 @@ h1,h2,h3{font-family:"Bebas Neue","Titillium Web",sans-serif;font-weight:400;let
 
 /* ---------- responsive ---------- */
 @media (max-width:720px){
+  /* no room for side artwork on phones — let the column fill the screen */
+  .shell{border-left:0;border-right:0;background:rgba(7,10,30,.94);box-shadow:none}
   .header-inner{padding:12px 16px}
   .brand-text h1{font-size:30px}
   .stats{width:100%;justify-content:space-between}
