@@ -68,14 +68,14 @@ h1,h2,h3{font-family:"Bebas Neue","Titillium Web",sans-serif;font-weight:400;let
   max-width:1300px;margin:0 auto;padding:14px 22px;
   display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
 }
-.brand{display:flex;align-items:center;gap:14px}
-.brand-mark{
-  width:54px;height:54px;display:grid;place-items:center;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  clip-path:polygon(22% 0,100% 0,78% 100%,0 100%);
-  box-shadow:0 0 26px rgba(18,216,255,.55);
+.brand{display:flex;align-items:center;gap:13px}
+.brand-logo{
+  width:78px;height:78px;flex:none;object-fit:contain;
+  /* the logo art sits on pure black — screen blending melts that box into the header */
+  mix-blend-mode:screen;
+  filter:drop-shadow(0 0 14px rgba(0,132,255,.38)) drop-shadow(0 0 9px rgba(255,42,42,.24));
+  user-select:none;-webkit-user-drag:none;
 }
-.brand-mark .bolt{font-size:26px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5))}
 .brand-text h1{font-size:38px;line-height:.86;display:flex;gap:8px}
 .brand-text h1 span{color:var(--accent)}
 .brand-text p{margin:2px 0 0;color:var(--muted);font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:700}
@@ -343,7 +343,7 @@ h1,h2,h3{font-family:"Bebas Neue","Titillium Web",sans-serif;font-weight:400;let
   .wrap{padding:16px}
   .toolbar-right{margin-left:0;width:100%;justify-content:space-between}
   .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
-  .brand-mark{width:44px;height:44px}
+  .brand-logo{width:58px;height:58px}
 }
 @media (max-width:420px){
   .grid{grid-template-columns:repeat(2,1fr)}
